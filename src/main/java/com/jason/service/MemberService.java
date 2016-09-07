@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class MemberService {
 
-
     private MemberMapper memberMapper;
 
     @Autowired
