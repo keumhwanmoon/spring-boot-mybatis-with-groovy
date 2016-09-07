@@ -1,9 +1,10 @@
 package com.jason.controller;
 
 import com.jason.domain.Member;
-import com.jason.mapper.MemberMapper;
+import com.jason.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -14,12 +15,29 @@ import java.util.List;
  */
 @Controller
 public class MemberController {
-    @Autowired
-    MemberMapper memberMapper;
 
-    @RequestMapping("/")
+    private MemberService memberService;
+
+    @Autowired
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
+    @RequestMapping
     @ResponseBody
     public List<Member> findMembers() {
-        return memberMapper.findMembers();
+        return memberService.findMembers();
+    }
+
+    @RequestMapping("/{memberName}")
+    @ResponseBody
+    public List<Member> findMembersByName(@PathVariable("memberName") String memberName) {
+        return memberService.findMembersByName(memberName);
+    }
+
+    @RequestMapping("/members/{memberName}")
+    @ResponseBody
+    public List<Member> findMembersByName2(@PathVariable("memberName") String memberName) {
+        return memberService.findMembersByName2(memberName);
     }
 }
